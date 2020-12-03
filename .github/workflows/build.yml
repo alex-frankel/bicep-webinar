@@ -16,11 +16,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Install bicep CLI
+      - name: Install bicep CLI
+        run: |
+          curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
+          chmod +x ./bicep
+          sudo mv ./bicep /usr/local/bin/bicep
+          bicep --help
+           
+
       # Transpile bicep file into ARM template
-      - name: Build ARM Template from bicep file
-        uses: aliencube/bicep-build-actions@v0.1 # pulls latest release from bicep repo
-        with:
-          files: './main.bicep'
+      # - name: Build ARM Template from bicep file
+      #   uses: aliencube/bicep-build-actions@v0.1 # pulls latest release from bicep repo
+      #   with:
+      #     files: './main.bicep'
 
       - name: Azure Login
         uses: azure/login@v1
