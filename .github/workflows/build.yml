@@ -3,12 +3,8 @@ name: bicep build and deploy
 on: push
 
 jobs:
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
   bicep-build-and-deploy:
-    # Name the Job
     name: bicep build and deploy
-    # Set the type of machine to run on
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install bicep CLI
+      # Install the latest release of the bicep CLI
       - name: Install bicep CLI
         run: |
           curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
@@ -28,12 +24,6 @@ jobs:
       - name: Build ARM Template from bicep file
         run: |
           bicep build ./main.bicep
-          
-      # Transpile bicep file into ARM template
-      # - name: Build ARM Template from bicep file
-      #   uses: aliencube/bicep-build-actions@v0.1 # pulls latest release from bicep repo
-      #   with:
-      #     files: './main.bicep'
 
       - name: Azure Login
         uses: azure/login@v1
@@ -48,10 +38,13 @@ jobs:
             az account show
             az deployment sub what-if -f ./main.json -l eastus
 
+
+      # --- UNCOMMENT TO DEPLOY --- 
+
       # Deploy template
-      - name: Deploy template
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            # az account show
-            # az deployment sub create -f ./main.json -l eastus
+      # - name: Deploy template
+      #   uses: azure/CLI@v1
+      #   with:
+      #     inlineScript: |
+      #       # az account show
+      #       # az deployment sub create -f ./main.json -l eastus
