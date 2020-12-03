@@ -24,7 +24,11 @@ jobs:
           sudo mv ./bicep /usr/local/bin/bicep
           bicep --help
            
-
+      # Transpile bicep file into ARM template
+      - name: Build ARM Template from bicep file
+        run: |
+          bicep build ./main.bicep
+          
       # Transpile bicep file into ARM template
       # - name: Build ARM Template from bicep file
       #   uses: aliencube/bicep-build-actions@v0.1 # pulls latest release from bicep repo
