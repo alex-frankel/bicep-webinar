@@ -40,5 +40,5 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az account show
-            az deployment sub create -f ./main.json -l eastus
+            # az account show
+            # az deployment sub create -f ./main.json -l eastus
