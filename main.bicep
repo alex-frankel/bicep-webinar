@@ -1,11 +1,14 @@
-param location string = resourceGroup().location
-param storageAccountName string = 'uniqueString001'
+targetScope = 'subscription'
 
-resource stg 'Microsoft.Storage/storageAccounts@2019-06-01' = {
-  name: storageAccountName
-  location: location
-  kind: 'Storage'
-  sku: {
-    name: 'Standard_GRS'
+resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: 'bicep-webinar-rg'
+  location: 'eastus'
+}
+
+module webAppMod './web-app.bicep' = {
+  name: 'webAppDeploy'
+  scope: resourceGroup(rg.name)
+  params: {
+    webAppName: 'adotfrankweb'
   }
 }
